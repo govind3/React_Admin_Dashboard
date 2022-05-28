@@ -23,11 +23,9 @@ app.post("/login", async (req, res) => {
     // Get user input
     const { email, password } = req.body;
 
-    // Validate user input
     if (!(email && password)) {
       res.status(400).send("All input is required");
     }
-    // Validate if user exist in our database
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
@@ -67,7 +65,8 @@ app.post("/register", async (req, res) => {
     const {valid, reason,validators} = await isEmailValid(email)
     if(!(valid))
     {
-      console.log('Please provide a valid email address.')
+      //console.log('Please provide a valid email address.')
+
       return res.status(400).send({
         message:"Please provide a valid email address.",
         reason:validators[reason].reason
